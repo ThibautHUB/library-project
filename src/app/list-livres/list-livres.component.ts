@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Ilivre } from '../models/livre';
 
 @Component({
   selector: 'app-list-livres',
   templateUrl: './list-livres.component.html',
   styleUrls: ['./list-livres.component.css']
 })
-export class ListLivresComponent implements OnInit {
+export class ListLivresComponent implements OnInit, OnChanges, AfterContentInit, OnDestroy {
 
   titre:string = "La liste des livres";
-  livres = [{
+  WidthImg=60;
+  Height=80;
+  affichage:boolean=true;
+  livres: Ilivre[] = [{
     id:1,Name:"Big Data For Dummies",ImageUrl:"https://images-na.ssl-images-amazon.com/images/I/51p6wBow%2B3L._SX389_BO1,204,203,200_.jpg",ShortDescription:"Big data management is one of the major challenges facing business, industry, and not-for-profit organizations",Price:98,Category:'Big data',Etoile:3
       },
     {
@@ -36,9 +40,45 @@ export class ListLivresComponent implements OnInit {
     {
       id:8,Name:"Learning Node.js",ImageUrl:"https://images-na.ssl-images-amazon.com/images/I/41NGBmeH1uL._SX403_BO1,204,203,200_.jpg",ShortDescription:"Learning Node.js Development: Learn the fundamentals of Node.js, and deploy and test Node.js applications on the web",Price:98,Category:'Back-End',Etoile:4.6
     }];
-  constructor() { }
+
+  listCategorie: string[] = ["Big data","Database", "Front-End", "Back-End"]
+  categorieId: string = 'all';
+  livreTemp:any[] = [];
+
+  constructor() {
+    console.log('Constructeur');
+  }
+  ngOnDestroy(): void {
+    console.log('ngOnDestroy');
+  }
+
+  ngAfterContentInit(): void {
+    console.log('ngAfterContentInit');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges');
+  }
 
   ngOnInit(): void {
+    console.log('ngOnInit');
+    this.livreTemp = this.livres;
+  }
+
+  onclick() {
+    this.affichage = !this.affichage;
+  }
+
+  ChangeCategory(){
+    if(this.categorieId=="all"){
+      this.livres = this.livreTemp;
+    } else {
+      this.livres = this.livreTemp.filter(p=>p.Category == this.categorieId);
+    }
+  }
+
+  onNotify(event:number){
+    alert(event);
   }
 
 }
