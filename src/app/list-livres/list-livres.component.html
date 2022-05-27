@@ -26,6 +26,7 @@
             <th>Catégorie</th>
             <th>Prix</th>
             <th>Etoile</th>
+            <th>Détail</th>
           </tr>
           <tr *ngFor="let livre of livres">
             <td> <img [src]="livre.ImageUrl" [height]="Height" [width]="WidthImg"> </td>
@@ -34,6 +35,7 @@
             <td> {{livre.Category | uppercase | deleteSpace}}</td>
             <td> {{livre.Price | currency:'EUR':true}}</td>
             <td> <app-etoile [rate]="livre.Etoile" (notify)="onNotify($event)"></app-etoile></td>
+            <td> <a class="btn btn-primary" [routerLink]="['/livre', livre.id]">Détail</a></td>
           </tr>
         </thead>
         <tbody>
